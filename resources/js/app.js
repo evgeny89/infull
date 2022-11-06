@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import axios from "axios";
 import NotificationContainer from "react-notifications/lib/NotificationContainer";
 import {createNotification, router} from "./helpers"
@@ -25,7 +25,6 @@ axios.interceptors.request.use(function (config) {
 });
 
 axios.interceptors.response.use(function (response) {
-
     return response;
 }, function (error) {
     createNotification("error", error.message);
@@ -36,10 +35,10 @@ document.addEventListener("DOMContentLoaded", () => {
     createNotification("info", "loaded");
 })
 
-ReactDOM.render(
-    <React.StrictMode>
+const app = document.querySelector("#App");
+createRoot(app).render(
+    <>
         <RouterProvider router={router}/>
         <NotificationContainer/>
-    </React.StrictMode>,
-    document.querySelector("#App")
+    </>
 );
