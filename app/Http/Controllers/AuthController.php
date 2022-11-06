@@ -46,7 +46,11 @@ class AuthController extends Controller
      */
     public function me(): JsonResponse
     {
-        return response()->json(auth()->user());
+        $user = auth()->user();
+        if (!$user) {
+            return response()->json(['error' => 'ошибка авторизации'], 401);
+        }
+        return response()->json($user);
     }
 
     /**
